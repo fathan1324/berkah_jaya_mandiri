@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, inject } from 'vue'
 
 import garasiImg from '../assets/jasa/Garasi.png'
 import kanopiImg from '../assets/jasa/Kanopi.png'
@@ -14,38 +14,31 @@ interface Service {
   image: string
 }
 
+const props = defineProps<{ previewCount?: number }>()
+
 const services = ref<Service[]>([
-  {
-    id: 1,
-    title: 'Pagar Besi',
-    image: pagarImg
-  },
-  {
-    id: 2,
-    title: 'Kanopi',
-    image: kanopiImg
-  },
-  {
-    id: 3,
-    title: 'Tralis Jendela',
-    image: tralisImg
-  },
-  {
-    id: 4,
-    title: 'Pintu Garasi',
-    image: garasiImg
-  },
-  {
-    id: 5,
-    title: 'Kusen Aluminium',
-    image: kusenAluImg
-  },
-  {
-    id: 6,
-    title: 'Tangki Galvanis',
-    image: tangkiGalvanisImg
-  }
+  { id: 1, title: 'Pagar Besi', image: pagarImg },
+  { id: 2, title: 'Kanopi', image: kanopiImg },
+  { id: 3, title: 'Tralis Jendela', image: tralisImg },
+  { id: 4, title: 'Pintu Garasi', image: garasiImg },
+  { id: 5, title: 'Kusen Aluminium', image: kusenAluImg },
+  { id: 6, title: 'Tangki Galvanis', image: tangkiGalvanisImg },
+  { id: 7, title: 'Atap Rumah', image: kanopiImg }
 ])
+
+const displayedServices = computed(() => {
+  if (props.previewCount && props.previewCount > 0) {
+    return services.value.slice(0, props.previewCount)
+  }
+  return services.value
+})
+
+// navigation (uses provided navigateTo from App)
+const navigateTo = inject<(page: string, productId?: number) => void>('navigateTo')
+
+const openProducts = () => {
+  if (navigateTo) navigateTo('produk')
+}
 </script>
 
 <template>
@@ -60,7 +53,7 @@ const services = ref<Service[]>([
 
       <div class="services-grid">
         <div 
-          v-for="service in services" 
+          v-for="service in displayedServices" 
           :key="service.id" 
           class="service-card"
         >
@@ -71,6 +64,15 @@ const services = ref<Service[]>([
           />
           <div class="service-overlay"></div>
         </div>
+      </div>
+
+      <div class="services-cta" style="text-align:center; margin-top:1.75rem;">
+        <button class="catalog-cta" @click="openProducts" aria-label="Lihat semua produk">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Selengkapnya</span>
+        </button>
       </div>
     </div>
   </section>
@@ -192,5 +194,34 @@ const services = ref<Service[]>([
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+}
+
+.services-cta .catalog-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(90deg, #1e3a8a, #1e40af);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(30,58,138,0.18);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.services-cta .catalog-cta svg {
+  display: inline-block;
+  color: rgba(255,255,255,0.95);
+}
+
+.services-cta .catalog-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(30,58,138,0.22);
+}
+
+.services-cta .catalog-cta:active {
+  transform: translateY(-1px);
 }
 </style>

@@ -21,6 +21,8 @@ interface ProductDetail {
   material: string
   requiredMaterials: string[]
   notes: string[]
+  advantages?: string[]
+  disadvantages?: string[]
   priceExample: {
     dimension: string
     price: string
@@ -31,7 +33,7 @@ const props = defineProps<{
   productId: number
 }>()
 
-const navigateTo = inject<(page: string) => void>('navigateTo')
+const navigateTo = inject<(page: string, productId?: number) => void>('navigateTo')
 
 const productDetails: Record<number, ProductDetail> = {
   1: {
@@ -45,12 +47,20 @@ const productDetails: Record<number, ProductDetail> = {
     orderTime: '±1 Hari',
     material: 'Galvanis',
     requiredMaterials: [
-      'Besi hollow/square',
+      'Besi hollo/ square',
       'Balok Kayu',
-      'Besi pipa',
+      'Besi pejal',
       'Besi Ram',
       'Plat strip',
       'Cat besi'
+    ],
+    advantages: [
+      'Lebih terjangkau',
+      'Cukup tahan terhadap korosi ringan'
+    ],
+    disadvantages: [
+      'Kurang ideal untuk investasi jangka panjang',
+      'Kurang tangguh di kondisi ekstrem'
     ],
     notes: [
       'Model bisa request',
@@ -74,10 +84,19 @@ const productDetails: Record<number, ProductDetail> = {
     requiredMaterials: [
       'Besi hollow/square',
       'Balok Kayu',
-      'Besi pipa',
+      'Besi pejal',
       'Besi Ram',
       'Plat strip',
       'Cat besi'
+    ],
+    advantages: [
+      'Elegan dan profesional',
+      'Tahan karat dan cuaca ekstrem',
+      'Minim perawatan, umur panjang'
+    ],
+    disadvantages: [
+      'Investasi awal lebih tinggi',
+      'Membutuhkan teknik pengerjaan khusus'
     ],
     notes: [
       'Model bisa request',
@@ -99,21 +118,27 @@ const productDetails: Record<number, ProductDetail> = {
     orderTime: '±1 Hari',
     material: 'Baja ringan',
     requiredMaterials: [
-      'Besi hollow/square',
-      'Balok Kayu',
-      'Besi pipa',
-      'Besi Ram',
-      'Plat strip',
-      'Cat besi'
+      'Baja ringan',
+      'Atap genteng metal',
+      'Atap alderon',
+      'Atap spandek'
+    ],
+    advantages: [
+      'Pemasangan cepat dan efisien',
+      'Bobot ringan namun tetap kokoh',
+      'Tahan terhadap karat dan cuaca ekstrem',
+      'Biaya perawatan rendah'
+    ],
+    disadvantages: [
+      'Kurang ideal untuk bentangan sangat lebar tanpa tambahan penopang',
+      'Pilihan model dan bentuk sedikit terbatas dibanding material lain'
     ],
     notes: [
       'Model bisa request',
-      'Harga bisa nego saat pengukuran',
-      'Jika dimensi lebih besar, harga berbeda',
-      'Ukuran standar minimal: Lebar 0,5 x Tinggi 1,5 Meter'
+      'Harga bisa nego saat pengukuran'
     ],
     priceExample: {
-      dimension: 'Lebar 0,5 x Tinggi 1,5 Meter',
+      dimension: 'Panjang 5 x Lebar 2 Meter',
       price: 'Rp250.000'
     }
   },
@@ -126,23 +151,30 @@ const productDetails: Record<number, ProductDetail> = {
     image: kanopiDImg,
     observationTime: '±3 Jam',
     orderTime: '±1 Hari',
-    material: 'Galvanis',
+    material: 'Hollo/square',
     requiredMaterials: [
-      'Besi hollow/square',
-      'Balok Kayu',
+      'Besi hollo/square',
       'Besi pipa',
-      'Besi Ram',
-      'Plat strip',
-      'Cat besi'
+      'Atap genteng metal',
+      'Atap alderon',
+      'Atap spandek'
+    ],
+    advantages: [
+      'Tampilan lebih rapi dan modern',
+      'Mudah dibentuk dan dikombinasikan dengan berbagai desain',
+      'Pilihan ukuran dan ketebalan lebih beragam',
+      'Cocok untuk hunian minimalis hingga komersial'
+    ],
+    disadvantages: [
+      'Rentan berkarat jika tidak dilapisi cat anti karat',
+      'Membutuhkan perawatan rutin agar tahan lama'
     ],
     notes: [
       'Model bisa request',
-      'Harga bisa nego saat pengukuran',
-      'Jika dimensi lebih besar, harga berbeda',
-      'Ukuran standar minimal: Lebar 1 x Tinggi 2 Meter'
+      'Harga bisa nego saat pengukuran'
     ],
     priceExample: {
-      dimension: 'Lebar 1 x Tinggi 2 Meter',
+      dimension: 'Panjang 5 x Lebar 2 Meter',
       price: 'Rp450.000'
     }
   },
@@ -340,6 +372,32 @@ const productDetails: Record<number, ProductDetail> = {
       price: 'Rp13.000.000'
     }
   }
+  ,
+  12: {
+    id: 12,
+    title: 'Atap Baja Ringan',
+    duration: '±3-6 hari',
+    unit: 'Meter',
+    price: 'Rp300.000',
+    image: kanopiDImg,
+    observationTime: '±3 Jam',
+    orderTime: '±1 Hari',
+    material: 'Baja ringan',
+    requiredMaterials: [
+      'Kerangka baja ringan',
+      'Atap genteng metal',
+      'Atap spandek',
+      'Atap genteng press'
+    ],
+    notes: [
+      'Model bisa request',
+      'Harga bisa nego saat pengukuran'
+    ],
+    priceExample: {
+      dimension: 'Panjang 10 x Lebar 8 x 1,3',
+      price: 'Rp300.000 × (P x L x 1.3)'
+    }
+  }
 }
 
 const currentProduct = ref<ProductDetail>(productDetails[props.productId] ?? productDetails[1]!)
@@ -348,6 +406,27 @@ const goBack = () => {
   if (navigateTo) {
     navigateTo('produk')
   }
+}
+
+// whatsapp integration
+const whatsappNumber = '628988571705'
+
+const buildWhatsAppMessage = (type: 'consult' | 'order') => {
+  const p = currentProduct.value
+  if (!p) return ''
+
+  if (type === 'consult') {
+    return `Halo, saya ingin konsultasi mengenai produk *${p.title}*.\nLama pengerjaan: ${p.duration}.\nPerkiraan harga: ${p.price}.\nMohon informasi lebih lanjut. Terima kasih.`
+  }
+
+  // order
+  return `Halo, saya ingin memesan produk *${p.title}*.\nLama pengerjaan: ${p.duration}.\nPerkiraan harga: ${p.price}.\nMohon informasikan langkah selanjutnya untuk pemesanan. Terima kasih.`
+}
+
+const waHref = (type: 'consult' | 'order') => {
+  const msg = buildWhatsAppMessage(type)
+  const encoded = encodeURIComponent(msg)
+  return `https://wa.me/${whatsappNumber}?text=${encoded}`
 }
 </script>
 
@@ -424,22 +503,39 @@ const goBack = () => {
           </ul>
         </div>
 
+        <!-- Advantages (Kelebihan) -->
+        <div v-if="currentProduct.advantages && currentProduct.advantages.length" class="advantages-section">
+          <h4 class="subsection-title">Kelebihan:</h4>
+          <ul class="notes-list">
+            <li v-for="(item, i) in currentProduct.advantages" :key="'adv-'+i">{{ item }}</li>
+          </ul>
+        </div>
+
+        <!-- Disadvantages (Kekurangan) -->
+        <div v-if="currentProduct.disadvantages && currentProduct.disadvantages.length" class="disadvantages-section">
+          <h4 class="subsection-title">Kekurangan:</h4>
+          <ul class="notes-list">
+            <li v-for="(item, i) in currentProduct.disadvantages" :key="'dis-'+i">{{ item }}</li>
+          </ul>
+        </div>
+
         <div class="price-example">
           <h4 class="subsection-title">Prediksi harga di {{ currentProduct.priceExample.dimension }}</h4>
           <div class="example-price">= {{ currentProduct.priceExample.price }}</div>
+          <p v-if="currentProduct.priceExample && currentProduct.priceExample.dimension.includes('1,3')" class="slope-note">*1,3 adalah rumus kemiringan/sudut</p>
         </div>
       </div>
 
-      <!-- Action Buttons -->
+      <!-- Action Buttons (open WhatsApp with prefilled message) -->
       <div class="action-buttons">
-        <button class="btn-consultation">
+        <a :href="waHref('consult')" target="_blank" rel="noopener noreferrer" class="btn-consultation">
           <img :src="whatsappIcon" alt="WhatsApp" class="btn-icon" />
           Konsultasi Gratis
-        </button>
-        <button class="btn-order">
+        </a>
+        <a :href="waHref('order')" target="_blank" rel="noopener noreferrer" class="btn-order">
           <img :src="whatsappIcon" alt="WhatsApp" class="btn-icon" />
           Pesan Sekarang
-        </button>
+        </a>
       </div>
     </div>
   </section>
@@ -604,6 +700,20 @@ const goBack = () => {
   margin: 0;
 }
 
+.advantages-section,
+.disadvantages-section {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: #fff7ed;
+  border-radius: 12px;
+  border: 1px solid #f59e0b33;
+}
+
+.disadvantages-section {
+  background: #fff1f2;
+  border: 1px solid #ef444433;
+}
+
 .materials-list li,
 .notes-list li {
   padding-left: 1.5rem;
@@ -658,6 +768,13 @@ const goBack = () => {
   font-weight: 800;
   color: #1e3a8a;
   margin-top: 0.5rem;
+}
+
+.slope-note {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #334155;
+  font-style: italic;
 }
 
 .action-buttons {

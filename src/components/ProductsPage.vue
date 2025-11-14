@@ -121,10 +121,20 @@ const products = ref<Product[]>([
     duration: '±3-6 hari',
     unit: 'per meter'
   }
+  ,
+  {
+    id: 12,
+    title: 'Atap Baja Ringan',
+    category: 'Atap Rumah',
+    image: kanopiDImg,
+    price: 'Rp 300.000',
+    duration: '±3-6 hari',
+    unit: 'per meter'
+  }
 ])
 
 const selectedCategory = ref<string>('Semua')
-const categories = ref<string[]>(['Semua', 'Pagar', 'Kanopi', 'Kusen', 'Pintu', 'Tralis', 'Tangga'])
+const categories = ref<string[]>(['Semua', 'Pagar', 'Kanopi', 'Kusen', 'Pintu', 'Tralis', 'Tangga', 'Atap Rumah'])
 const navigateTo = inject<(page: string, productId?: number) => void>('navigateTo')
 
 const filteredProducts = computed(() => {
