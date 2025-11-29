@@ -7,6 +7,7 @@ import garasiD1Img from '../assets/produk/GarasiD1.png'
 import garasiD2Img from '../assets/produk/GarasiD2.png'
 import tralisDImg from '../assets/produk/TralisD.png'
 import tangkiGalvDImg from '../assets/produk/TanGalvD.png'
+import atapDImg from '../assets/produk/AtapD.png'
 import whatsappIcon from '../assets/whatsapp.png'
 
 interface ProductDetail {
@@ -379,7 +380,7 @@ const productDetails: Record<number, ProductDetail> = {
     duration: '±3-6 hari',
     unit: 'Meter',
     price: 'Rp300.000',
-    image: kanopiDImg,
+    image: atapDImg,
     observationTime: '±3 Jam',
     orderTime: '±1 Hari',
     material: 'Baja ringan',
@@ -395,7 +396,7 @@ const productDetails: Record<number, ProductDetail> = {
     ],
     priceExample: {
       dimension: 'Panjang 10 x Lebar 8 x 1,3',
-      price: 'Rp300.000 × (P x L x 1.3)'
+      price: 'Rp31.200.000'
     }
   }
 }
@@ -409,22 +410,17 @@ const goBack = () => {
 }
 
 // whatsapp integration
-const whatsappNumber = '628988571705'
+const whatsappNumber = '628976367895'
 
-const buildWhatsAppMessage = (type: 'consult' | 'order') => {
+const buildWhatsAppMessage = () => {
   const p = currentProduct.value
   if (!p) return ''
 
-  if (type === 'consult') {
-    return `Halo, saya ingin konsultasi mengenai produk *${p.title}*.\nLama pengerjaan: ${p.duration}.\nPerkiraan harga: ${p.price}.\nMohon informasi lebih lanjut. Terima kasih.`
-  }
-
-  // order
-  return `Halo, saya ingin memesan produk *${p.title}*.\nLama pengerjaan: ${p.duration}.\nPerkiraan harga: ${p.price}.\nMohon informasikan langkah selanjutnya untuk pemesanan. Terima kasih.`
+  return `Halo, saya tertarik dengan produk *${p.title}*. Saya ingin melakukan konsultasi.`
 }
 
-const waHref = (type: 'consult' | 'order') => {
-  const msg = buildWhatsAppMessage(type)
+const waHref = () => {
+  const msg = buildWhatsAppMessage()
   const encoded = encodeURIComponent(msg)
   return `https://wa.me/${whatsappNumber}?text=${encoded}`
 }
@@ -526,15 +522,11 @@ const waHref = (type: 'consult' | 'order') => {
         </div>
       </div>
 
-      <!-- Action Buttons (open WhatsApp with prefilled message) -->
+      <!-- Action Button (open WhatsApp with prefilled message) -->
       <div class="action-buttons">
-        <a :href="waHref('consult')" target="_blank" rel="noopener noreferrer" class="btn-consultation">
+        <a :href="waHref()" target="_blank" rel="noopener noreferrer" class="btn-contact">
           <img :src="whatsappIcon" alt="WhatsApp" class="btn-icon" />
-          Konsultasi Gratis
-        </a>
-        <a :href="waHref('order')" target="_blank" rel="noopener noreferrer" class="btn-order">
-          <img :src="whatsappIcon" alt="WhatsApp" class="btn-icon" />
-          Pesan Sekarang
+          Pesan atau Konsultasi
         </a>
       </div>
     </div>
@@ -779,55 +771,38 @@ const waHref = (type: 'consult' | 'order') => {
 
 .action-buttons {
   display: flex;
-  gap: 1rem;
+  justify-content: flex-start;
   margin-top: 2rem;
-  flex-wrap: wrap;
 }
 
-.btn-consultation,
-.btn-order {
-  flex: 1;
-  min-width: 200px;
-  padding: 1rem 2rem;
+.btn-contact {
+  padding: 1.25rem 3rem;
   border: none;
   border-radius: 50px;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  background: #25D366;
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
 }
 
 .btn-icon {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
 }
 
-.btn-consultation {
-  background: #ffffff;
-  color: #1e3a8a;
-  border: 2px solid #1e3a8a;
-}
-
-.btn-consultation:hover {
-  background: #f0f9ff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
-}
-
-.btn-order {
-  background: #1e3a8a;
-  color: #ffffff;
-}
-
-.btn-order:hover {
-  background: #1e40af;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.4);
+.btn-contact:hover {
+  background: #1ebe57;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
 }
 
 /* Responsive */

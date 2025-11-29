@@ -55,15 +55,6 @@ const handleNavigation = (page: string, event: Event) => {
             Produk
           </a>
         </li>
-        <li>
-          <a 
-            href="#tentang" 
-            :class="{ active: activeMenu === 'tentang' }"
-            @click="handleNavigation('tentang', $event)"
-          >
-            Tentang Perusahaan
-          </a>
-        </li>
       </ul>
     </div>
   </nav>

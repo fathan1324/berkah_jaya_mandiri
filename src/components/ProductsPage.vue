@@ -8,6 +8,7 @@ import garasiD1Img from '../assets/produk/GarasiD1.png'
 import garasiD2Img from '../assets/produk/GarasiD2.png'
 import tralisDImg from '../assets/produk/TralisD.png'
 import tangkiGalvDImg from '../assets/produk/TanGalvD.png'
+import atapDImg from '../assets/produk/AtapD.png'
 
 interface Product {
   id: number
@@ -78,7 +79,7 @@ const products = ref<Product[]>([
   {
     id: 7,
     title: 'Garasi Handerson',
-    category: 'Pintu',
+    category: 'Gudang',
     image: garasiD1Img,
     price: 'Rp 1.200.000',
     duration: '±3-6 hari',
@@ -87,7 +88,7 @@ const products = ref<Product[]>([
   {
     id: 8,
     title: 'Folding Gate',
-    category: 'Pintu',
+    category: 'Gudang',
     image: garasiD2Img,
     price: 'Rp 600.000',
     duration: '±3-6 hari',
@@ -126,7 +127,7 @@ const products = ref<Product[]>([
     id: 12,
     title: 'Atap Baja Ringan',
     category: 'Atap Rumah',
-    image: kanopiDImg,
+    image: atapDImg,
     price: 'Rp 300.000',
     duration: '±3-6 hari',
     unit: 'per meter'
@@ -134,7 +135,7 @@ const products = ref<Product[]>([
 ])
 
 const selectedCategory = ref<string>('Semua')
-const categories = ref<string[]>(['Semua', 'Pagar', 'Kanopi', 'Kusen', 'Pintu', 'Tralis', 'Tangga', 'Atap Rumah'])
+const categories = ref<string[]>(['Semua', 'Pagar', 'Kanopi', 'Kusen', 'Gudang', 'Tralis', 'Tangga', 'Atap Rumah'])
 const navigateTo = inject<(page: string, productId?: number) => void>('navigateTo')
 
 const filteredProducts = computed(() => {

@@ -7,6 +7,7 @@ import kusenAluImg from '../assets/jasa/Kusn_Alu.png'
 import pagarImg from '../assets/jasa/Pgar.png'
 import tangkiGalvanisImg from '../assets/jasa/TanGalvans.png'
 import tralisImg from '../assets/jasa/Tralis.png'
+import atapImg from '../assets/jasa/Atap.png'
 
 interface Service {
   id: number
@@ -23,7 +24,7 @@ const services = ref<Service[]>([
   { id: 4, title: 'Pintu Garasi', image: garasiImg },
   { id: 5, title: 'Kusen Aluminium', image: kusenAluImg },
   { id: 6, title: 'Tangki Galvanis', image: tangkiGalvanisImg },
-  { id: 7, title: 'Atap Rumah', image: kanopiImg }
+  { id: 7, title: 'Atap Rumah', image: atapImg }
 ])
 
 const displayedServices = computed(() => {

@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import product1Img from '../assets/testi/custmr1.png'
-import product2Img from '../assets/testi/custmr2.png'
-import product3Img from '../assets/testi/custmr3.png'
+import product1Img from '../assets/testi/G1.png'
+import product2Img from '../assets/testi/G2.png'
+import product3Img from '../assets/testi/G3.png'
+import profile1Img from '../assets/testi/pG1.png'
+import profile2Img from '../assets/testi/pG2.png'
+import profile3Img from '../assets/testi/pG3.png'
 
 interface Testimonial {
   id: number
   name: string
   image: string
+  profileImage: string
   text: string
   rating: number
 }
@@ -16,23 +20,26 @@ interface Testimonial {
 const testimonials = ref<Testimonial[]>([
   {
     id: 1,
-    name: 'Pak Hendri',
+    name: 'Pak Pranedya',
     image: product1Img,
-    text: 'Saya puas dengan hasilnya',
+    profileImage: profile1Img,
+    text: 'Makasih ya mas, modelnya bagus dan istri saya suka',
     rating: 5
   },
   {
     id: 2,
-    name: 'Koh Aliong',
+    name: 'Bu Nies',
     image: product2Img,
-    text: 'Surprisingly, dapat diandalkan untuk tim yang terbatas',
+    profileImage: profile2Img,
+    text: 'Keren pak, sesuai kondisi rumah, bahan stainless emang sebagus itu',
     rating: 5
   },
   {
     id: 3,
-    name: 'Ahmad Wijaya',
+    name: 'Bu Iana',
     image: product3Img,
-    text: 'Harganya bersaing',
+    profileImage: profile3Img,
+    text: 'Pintunya oke mas, pasangnya juga rapih',
     rating: 5
   }
 ])
@@ -70,6 +77,11 @@ const testimonials = ref<Testimonial[]>([
             <p class="testimonial-text">"{{ testimonial.text }}"</p>
             
             <div class="customer-info">
+              <img 
+                :src="testimonial.profileImage" 
+                :alt="`Foto profil ${testimonial.name}`" 
+                class="customer-avatar"
+              />
               <h3 class="customer-name">{{ testimonial.name }}</h3>
             </div>
           </div>
@@ -184,6 +196,17 @@ const testimonials = ref<Testimonial[]>([
 .customer-info {
   padding-top: 1rem;
   border-top: 2px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.customer-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #1e3a8a;
 }
 
 .customer-name {

@@ -64,7 +64,7 @@ provide('navigateTo', navigateTo)
 }
 
 .catalog-title {
-  font-size: 2.25rem;
+  font-size: 3.5rem;
   color: #0f172a;
   font-weight: 800;
   margin-bottom: 0.75rem;
